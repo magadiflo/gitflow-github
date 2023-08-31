@@ -284,3 +284,102 @@ git checkout develop | git pull origin develop
 Con los cambios realizados en el repositorio remoto y local, tenemos de esta manera nuestras ramas donde la rama `hotfix-1.1.0` fue mergeada tanto a la rama `main` como a la `develop`:
 
 ![09-hotfix-main-develop](./assets/09-hotfix-main-develop.png)
+
+## Cambio #4: release-1.2.0 
+
+A continuación veremos los pasos a implementar cuando se va a publicar la siguiente versión del software:
+
+### Funcionalidad
+
+````bash
+git checkout develop | git pull origin develop | revisar git graph
+````
+````bash
+git checkout -b release-1.2.0
+````
+
+Realizamos algunos ajustes, pruebas o preparativos para el lanzamiento. En mi caso solo crearé un archivo donde simularemos que tendremos algunas configuraciones requeridas:
+
+````bash
+touch ajustes-release-1.2.0.properties
+````
+````bash
+git add .
+````
+````bash
+git commit -m "Último ajuste"
+````
+````bash
+git push -u origin release-1.2.0
+````
+
+### Resultado
+
+- **Repositorio Local**
+
+    ![10-release-local.png](./assets/10-release-local.png)
+
+- **Repositorio Remoto**
+
+    ![10-release-remoto](./assets/10-release-remoto.png)
+
+
+### Pull Request: de release a main
+
+Haremos que nuestra rama `release-1.2.0` sea integrado a la rama `main`. Para eso, seguimos la siguiente secuencia desde nuestro repositorio remoto en GitHub similar a lo que hicimos en el `#Cambio 1`:
+
+> **Repositorio > Pull requests > new pull request**
+>   - **base:** main
+>   - **compare:** release-1.2.0
+
+### Aprobando Pull Request: de release a main
+
+Aquí se haría la aprobación del pull request como en el `Cambio #1`.
+
+**En Local**
+
+Nos posicionamos en la rama `main` y traemos las actualizaciones:
+
+````bash
+git checkout main | git pull origin main
+````
+Es buena práctica etiquetar las últimas versiones que se tienen en main:
+````bash
+git tag -a 1.2.0 -m "Versión 1.2.0"
+````
+Subimos la etiqueta creada al repositorio remoto de GitHub
+````bash
+git tag -a 1.2.0 -m "Versión 1.2.0"
+````
+
+### Pull Request: de release a develop
+
+Para mantener los cambios realizados en la rama `release`, debemos fusionarlos nuevamente con `develop`, entonces haremos que nuestra rama `release-1.2.0` sea integrado a la rama `develop` en nuestro repositorio remoto de GitHub:
+
+> **Repositorio > Pull requests > new pull request**
+>   - **base:** develop
+>   - **compare:** release-1.2.0
+
+### Aprobando Pull Request: de release a develop 
+
+Aquí se haría la aprobación del pull request como en el `Cambio #1`.
+
+**En Local**
+
+Nos posicionamos en la rama `develop` y traemos las actualizaciones:
+
+````bash
+git checkout develop | git pull origin develop
+````
+
+Con los cambios realizados en el repositorio remoto y local, tenemos de esta manera nuestras ramas donde la rama `release-1.2.0` fue mergeada tanto a la rama `main` como a la `develop`:
+
+![11-release-merge-local-remoto](./assets/11-release-merge-local-remoto.png)
+
+---
+
+**NOTA**
+
+> Los ejemplos fueron tomados de `GitFlow en Github: G. Mizael Mtz Hdzn`, en ese tutorial cuando se mergea el `hotfix` o `release` se hace a `main` y luego, en ambos casos, el `main` se mergea con `develop`, algo que en la documentación original `(A successful Git branching model: Vincent Driessen)` no ocurre así. 
+>
+> En la documentación original, lo que ocurre es que cuando hablamos de las ramas `hotfix` o `release`, estas ramas en una primera instancia se mergean con `main` y luego nuevamente el `hotfix` o `release` se mergean con `develop`.
