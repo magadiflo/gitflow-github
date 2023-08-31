@@ -1,6 +1,7 @@
 # GitFlow y GitHub
 
 - Fuente: [A successful Git branching model: Vincent Driessen](https://nvie.com/posts/a-successful-git-branching-model/)
+- Fuente: [GitFlow en Github: G. Mizael Mtz Hdzn (youtube)](https://www.youtube.com/watch?v=LkYWop93S70&t=2176s)
 
 ## ¿Qué es GitFlow?
 
@@ -33,3 +34,14 @@ Cada una de estas ramas tiene un propósito específico y **está sujeta a regla
 Es importante aclarar que inicialmente `Git` tenía como nombre de rama principal `master` pero posteriormente se cambió al nombre de `main`, en ese sentido, se muestra a continuación las interacciones entre las distintas ramas de GitFlow:
 
 ![git branching model](./assets//01-git-branching-model.jpg)
+
+## Origen y destino de las ramificaciones
+
+| Rama          | Origen   | Destino          | Convención  | Ejemplo                       |
+|---------------|----------|------------------|-------------|-------------------------------|
+| **main**      |          |                  |             |                               |
+| **develop**   | main     |                  |             |                               |
+| **feature**   | develop  | develop          | feature/    | feature/nombre-de-feature     |
+| **release**   | develop  | develop y main   | release-*   | release-1.2                   |
+| **hotfix**    | main     | develop y main   | hotfix-*    | hotfix-1.2.1
+
