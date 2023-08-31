@@ -135,3 +135,61 @@ Lo que haría el encargado de aprobar los pull request sería `ir a la pestaña 
 
 Ahora, si damos click nuevamente en la pestaña `Pull requests` (como en el paso 1) veremos que **ya no tendremos ningún pull request pendiente.**
 
+## Cambio #2: feature/exportar-reporte-drive
+
+Como ya vimos la secuencia del Cambio #1, este nuevo cambio será algo similar:
+
+### Funcionalidad
+````bash
+git checkout develop | git pull origin develop | revisar git graph
+````
+````bash
+git checkout -b feature/exportar-reporte-drive
+````
+````bash
+touch exportar-reporte-drive.xls
+````
+````bash
+git add .
+````
+````bash
+git commit -m "Soporte para exportar reportes de usuarios a Google Drive"
+````
+````bash
+git push -u origin feature/exportar-reporte-drive
+````
+
+### Resultado
+- **Repositorio Local**
+
+    ![06-feature-2-local.png](./assets/06-feature-2-local.png)
+
+- **Repositorio Remoto**
+
+    ![06-feature-2-remoto.png](./assets/06-feature-2-remoto.png)
+
+### Pull Request
+
+Solicitaremos que nuestra rama `feature/exportar-reporte-drive sea integrado a la rama develop`.
+Para eso realizamos la misma secuencia que seguimos en el `Cambio #1` en nuestro `repositorio remoto de GitHub`:
+
+> **Repositorio > Pull requests > new pull request**
+> - **base:** develop
+> - **compare:** feature/exportar-reporte-drive
+
+
+### Aprobando Pull Request
+
+Aquí se haría la aprobación del pull request como en el `Cambio #1`.
+
+---
+
+**¡IMPORTANTE!**
+
+> Antes de que cree una nueva rama, a partir de, por ejemplo: la rama Develop, **es importante ACTUALIZAR nuestro repositorio local con lo que se tenga en el REPOSITORIO REMOTO (git pull)**, tal como lo hicimos en el Cambio #1 y Cambio #2 al inicio de los pasos a implementar.
+
+Hasta este punto, teniendo actualizado nuestra rama `develop` de nuestro `repositorio local` con los cambios ocurridos en el repositorio remoto, tenemos nuestras ramas de esta manera:
+
+![07-feature-1-feature-2-local](./assets/07-feature-1-feature-2-local.png)
+---
+
