@@ -75,3 +75,63 @@ Es importante aclarar que inicialmente `Git` tenía como nombre de rama principa
     ````
 - A partir de aquí, ya **estamos listos para empezar a generar nuevas features.**
 
+## Cambio #1: feature/login-con-facebook
+
+### Funcionalidad
+- Nos posicionamos en la rama `develop` y lo actualizamos con cambios que hayan en la `rama remota develop`.
+    ````bash
+    git checkout develop | git pull origin develop | revisar git graph
+    ````
+- Creamos la rama del feature y **nos posicionamos en él:**
+    ````bash
+    git checkout -b feature/login-con-facebook
+    ````
+- **Implementamos el feature:** creación de archivos, vistas, codificación, etc.. relacionado al feature.
+  En nuestro caso solo creamos archivos representativos, donde suponemos está nuestra implementación del login.
+    ````bash
+    touch login-facebook.html login-facebook.css login-facebook.js
+    ````
+- Agregamos los archivos implementados al `staging area`:
+    ````bash
+    git add .
+    ````
+- Confirmamos los cambios con un commit, agregándolos al `git repository`:
+    ````bash
+    git commit -m "Se implementó el inicio de sesión con Facebook"
+    ````
+- Posicionados en nuestra rama `feature/login-con-facebok` lo pusheamos para que esté en `GitHub`:
+    ````bash
+    git push -u origin feature/login-con-facebook
+    ````
+### Resultado
+
+- **Repositorio Local**
+
+    ![02-local-feature-login-con-facebook.png](./assets/02-local-feature-login-con-facebook.png)
+
+- **Repositorio Remoto**
+
+    ![feature-login-con-facebook](./assets/02-feature-login-con-facebook.png)
+
+### Pull Request
+
+**Realizamos un pull request** para que **la rama trabajada**, que fue subida al repositorio remoto, **se integre a la rama develop del repositorio remoto.**
+
+![03-pull-request-login-con-facebook.png](./assets/03-pull-request-login-con-facebook.png)
+
+Hasta este momento no hemos integrado las ramas, sino que solo hicimos la solicitud `(pull request)` **para que nuestra rama feature/login-con-facebook sea integrada a la rama develop.**
+Veremos además, que luego de haber realizado el pull request se creó un ícono que dice "Open" en color verde, y está a la espera de que se haga la confirmación.
+
+![04-espera-aprobacion-login-con-facebook](./assets/04-espera-aprobacion-login-con-facebook.png)
+
+### Aprobando Pull Request
+
+Debemos avisar a quien tenga permiso de aprobar los Pull Request que revise nuestro pull request subido y nos lo apruebe en caso de que esté todo correcto.
+Lo que haría el encargado de aprobar los pull request sería `ir a la pestaña Pull requests del repositorio remoto en GitHub`. Abrir nuestro pull request, `verificar los cambios que se han hecho (pestaña commits)`, ver los archivos modificados, en caso sea necesario, llevar esos cambios a su local, hace pruebas, etc.. 
+
+**Una vez verificado que nuestro pull request está correcto**, iría a la pestaña Conversation y haría click en `Merge pull request`
+
+![05-pull-request-login-con-facebook](./assets/05-pull-request-login-con-facebook.png)
+
+Ahora, si damos click nuevamente en la pestaña `Pull requests` (como en el paso 1) veremos que **ya no tendremos ningún pull request pendiente.**
+
