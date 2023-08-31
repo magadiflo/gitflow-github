@@ -193,3 +193,94 @@ Hasta este punto, teniendo actualizado nuestra rama `develop` de nuestro `reposi
 ![07-feature-1-feature-2-local](./assets/07-feature-1-feature-2-local.png)
 ---
 
+
+## Cambio #3: hotfix-1.1.0
+
+A continuación veremos los pasos a implementar cuando haya algún error en producción.
+
+### Funcionalidad
+````bash
+git checkout main | git pull origin main | revisar git graph
+````
+````bash
+git checkout -b hotfix-1.1.0
+````
+Aquí estaríamos aplicando la solución al error detectado en producción. En este ejemplo solo estoy cambiando el nombre de los archivos y creando uno nuevo, pero ¡Ojo! aquí no se agrega nuevas características ni funcionalidades, sino **solo es para solucionar el error detectado:**
+````bash
+ren login-facebook.css styles.css
+ren login-facebook.js scripts.js
+touch login-fixed-linkedin.html
+````
+````bash
+git add .
+````
+````bash
+git commit -m "Se solucionó el error al iniciar sesión con Linkedin"
+````
+````bash
+git push -u origin hotfix-1.1.0
+````
+
+### Resultado
+- **Repositorio Local**
+
+    ![08-pull-request-hotfix-local.png](./assets/08-pull-request-hotfix-local.png)
+
+- **Repositorio Remoto**
+
+    ![08-pull-request-hotfix-remoto](./assets/08-pull-request-hotfix-remoto.png)
+
+### Pull Request: de hotfix a main
+
+Haremos que nuestra rama `hotfix-1.1.0` sea integrado a la rama `main`. Para eso, seguimos la siguiente secuencia desde nuestro repositorio remoto en GitHub
+similar a lo que hicimos en el `#Cambio 1`:
+
+> **Repositorio > Pull requests > new pull request**
+>   - **base:** main
+>   - **compare:** hotfix-1.1.0
+
+### Aprobando Pull Request: de hotfix a main
+
+Aquí se haría la aprobación del pull request como en el `Cambio #1`.
+
+**En Local**
+
+Nos posicionamos en la rama `main` y traemos las actualizaciones:
+
+````bash
+git checkout main | git pull origin main
+````
+Es buena práctica etiquetar las últimas versiones que se tienen en main:
+````bash
+git tag -a 1.1.0 -m "Versión 1.1.0"
+````
+Subimos la etiqueta creada al repositorio remoto de GitHub
+````bash
+git push -u origin 1.1.0
+````
+
+### Pull Request: de hotfix a develop
+
+Como la rama hotfix fue integrada a la rama main, ahora esta rama main contiene la solución del error corregido, por lo tanto es necesario que nuestra rama develop también cuente con esta solución para que los desarrolladores sigan agregando características adicionales con estas actualizaciones incluidas.
+
+Haremos que nuestra rama `hotfix-1.1.0` sea integrado a la rama `develop` en nuestro repositorio remoto de GitHub:
+
+> **Repositorio > Pull requests > new pull request**
+>   - **base:** develop
+>   - **compare:** hotfix-1.1.0
+
+### Aprobando Pull Request: de hotfix a develop 
+
+Aquí se haría la aprobación del pull request como en el `Cambio #1`.
+
+**En Local**
+
+Nos posicionamos en la rama `develop` y traemos las actualizaciones:
+
+````bash
+git checkout develop | git pull origin develop
+````
+
+Con los cambios realizados en el repositorio remoto y local, tenemos de esta manera nuestras ramas donde la rama `hotfix-1.1.0` fue mergeada tanto a la rama `main` como a la `develop`:
+
+![09-hotfix-main-develop](./assets/09-hotfix-main-develop.png)
