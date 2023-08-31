@@ -42,6 +42,36 @@ Es importante aclarar que inicialmente `Git` tenía como nombre de rama principa
 | **main**      |          |                  |             |                               |
 | **develop**   | main     |                  |             |                               |
 | **feature**   | develop  | develop          | feature/    | feature/nombre-de-feature     |
-| **release**   | develop  | develop y main   | release-*   | release-1.2                   |
-| **hotfix**    | main     | develop y main   | hotfix-*    | hotfix-1.2.1
+| **release**   | develop  | main y develop   | release-*   | release-1.2                   |
+| **hotfix**    | main     | main y develop   | hotfix-*    | hotfix-1.2.1                  |
+
+## Práctica: Tabla de cambios
+
+|ID         |  DESCRIPCIÓN CORTA                            |  RAMA DE TRABAJO                | RAMA ORIGEN | RAMA DESTINO   |
+|-----------|-----------------------------------------------|---------------------------------|-------------|----------------|
+|Cambio #1  |  Implementar inicio de sesión con facebook    |  feature/login-con-facebook     | develop     | develop        |
+|Cambio #2  |  Exportar reporte de usuarios a Google Drive  |  feature/exportar-reporte-drive | develop     | develop        |
+|Cambio #3  |  Error al iniciar sesión con Linkedin (1.1.0) |  hotfix-1.1.0                   | main        | main y develop |
+|Cambio #4  |  Liberar versión (1.2.0)                      |  release-1.2.0                  | develop     | main y develop |
+
+## Inicio: Creación de repositorio
+
+- En `GitHub` creamos un repositorio llamado `gitflow-practice`. Por defecto, cuando creamos un repositorio se crea la rama `main`.
+- Clonamos el `repositorio remoto` en nuestra pc para tenerlo como `repositorio local`.
+- En nuestro `repositorio local, creamos la rama develop` y nos posicionamos en él.
+    ````bash
+    git checkout -b develop
+    ````
+- Subimos la rama `develop` a `GitHub`.
+    ````bash
+    git push -u origin develop
+    ````
+
+- Hasta este punto, tenemos nuestro repositorio local y remoto de esta manera:
+    ````bash
+    M:\PROGRAMACION\DESARROLLO_GIT\06.gitflow_en_github\gitflow-practice (develop -> origin)
+    λ git lg
+    * 530cdd2 (HEAD -> develop, origin/main, origin/develop, origin/HEAD, main) Initial commit
+    ````
+- A partir de aquí, ya **estamos listos para empezar a generar nuevas features.**
 
