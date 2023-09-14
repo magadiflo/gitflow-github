@@ -81,7 +81,7 @@ Es importante aclarar que inicialmente `Git` tenía como nombre de rama principa
     ````bash
     M:\PROGRAMACION\DESARROLLO_GIT\06.gitflow_en_github\gitflow-practice (develop -> origin)
     git lg
-    
+
     * 157609f (HEAD -> develop, origin/main, origin/develop, main) Initial commit
     ````
 - A partir de aquí, ya **estamos listos para empezar a generar nuevas features.**
@@ -216,12 +216,22 @@ git checkout main | git pull origin main | revisar git graph
 ````bash
 git checkout -b hotfix-1.1.0
 ````
-Aquí estaríamos aplicando la solución al error detectado en producción. En este ejemplo solo estoy cambiando el nombre de los archivos y creando uno nuevo, pero ¡Ojo! aquí no se agrega nuevas características ni funcionalidades, sino **solo es para solucionar el error detectado:**
-````bash
-ren login-facebook.css styles.css
-ren login-facebook.js scripts.js
-touch login-fixed-linkedin.html
+`Aquí estaríamos aplicando la solución al error detectado en producción.` 
+
+En este ejemplo, "mi solución del error" es solo cambiar el contenido inicial del archivo README.md, pero **¡Ojo! aquí no se agregan nuevas características ni funcionalidades**, sino **solo es para solucionar el error detectado:**
 ````
+### README.md (contenido inicial)
+Giflow en GitHub - Práctica
+````
+````
+### README.md (contenido luego de haber "solucionado el error")
+# gitflow-practice
+
+---
+
+Flujo de trabajo usando GitFlow con GitHub
+````
+Luego procedemos agregando los archivo al staging, luego commiteando y pusheando la rama local al remoto:
 ````bash
 git add .
 ````
@@ -292,7 +302,7 @@ Nos posicionamos en la rama `develop` y traemos las actualizaciones:
 git checkout develop | git pull origin develop
 ````
 
-Con los cambios realizados en el repositorio remoto y local, tenemos de esta manera nuestras ramas donde la rama `hotfix-1.1.0` fue mergeada tanto a la rama `main` como a la `develop`:
+Con los cambios realizados en el repositorio remoto y local, tenemos de esta manera nuestras ramas, donde la rama `hotfix-1.1.0` fue mergeada primero a la rama `main` y luego a la `develop`:
 
 ![09-hotfix-main-develop](./assets/09-hotfix-main-develop.png)
 
@@ -360,7 +370,7 @@ git tag -a 1.2.0 -m "Versión 1.2.0"
 ````
 Subimos la etiqueta creada al repositorio remoto de GitHub
 ````bash
-git tag -a 1.2.0 -m "Versión 1.2.0"
+git push -u origin 1.2.0
 ````
 
 ### Pull Request: de release a develop
@@ -383,7 +393,7 @@ Nos posicionamos en la rama `develop` y traemos las actualizaciones:
 git checkout develop | git pull origin develop
 ````
 
-Con los cambios realizados en el repositorio remoto y local, tenemos de esta manera nuestras ramas donde la rama `release-1.2.0` fue mergeada tanto a la rama `main` como a la `develop`:
+Con los cambios realizados en el repositorio remoto y local, tenemos de esta manera nuestras ramas, donde la rama `release-1.2.0` fue mergeada tanto a la rama `main` como a la `develop`:
 
 ![11-release-merge-local-remoto](./assets/11-release-merge-local-remoto.png)
 
