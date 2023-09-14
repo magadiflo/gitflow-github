@@ -56,9 +56,19 @@ Es importante aclarar que inicialmente `Git` tenía como nombre de rama principa
 
 ## Inicio: Creación de repositorio
 
-- En `GitHub` creamos un repositorio llamado `gitflow-practice`. Por defecto, cuando creamos un repositorio se crea la rama `main`.
+- En `GitHub` creamos un repositorio llamado [gitflow-practice](https://github.com/magadiflo/gitflow-practice.git). Por defecto, cuando creamos un repositorio se crea la rama `main`.
 - Clonamos el `repositorio remoto` en nuestra pc para tenerlo como `repositorio local`.
-- En nuestro `repositorio local, creamos la rama develop` y nos posicionamos en él.
+- Como el repositorio remoto lo creamos sin el archivo `README.md`, en nuestro repositorio local creamos dicho archivo.
+- Realizamos nuestro primer commit, tal solo con el archivo `README.md` siguiendo estos pasos:
+  ````
+  git add .
+  git commit -m "Initial commit"
+  ````
+- Subimos nuestra rama main local a la rama main remota:
+  ````
+  git push -u origin main
+  ````
+- Ahora, en nuestro `repositorio local, creamos la rama develop` y nos posicionamos en él.
     ````bash
     git checkout -b develop
     ````
@@ -70,8 +80,9 @@ Es importante aclarar que inicialmente `Git` tenía como nombre de rama principa
 - Hasta este punto, tenemos nuestro repositorio local y remoto de esta manera:
     ````bash
     M:\PROGRAMACION\DESARROLLO_GIT\06.gitflow_en_github\gitflow-practice (develop -> origin)
-    λ git lg
-    * 530cdd2 (HEAD -> develop, origin/main, origin/develop, origin/HEAD, main) Initial commit
+    git lg
+    
+    * 157609f (HEAD -> develop, origin/main, origin/develop, main) Initial commit
     ````
 - A partir de aquí, ya **estamos listos para empezar a generar nuevas features.**
 
