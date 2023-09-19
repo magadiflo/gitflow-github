@@ -277,7 +277,7 @@ git tag -a 1.1.0 -m "Versión 1.1.0"
 ````
 Subimos la etiqueta creada al repositorio remoto de GitHub
 ````bash
-git push -u origin 1.1.0
+git push origin 1.1.0
 ````
 
 ### Pull Request: de hotfix a develop
@@ -370,7 +370,7 @@ git tag -a 1.2.0 -m "Versión 1.2.0"
 ````
 Subimos la etiqueta creada al repositorio remoto de GitHub
 ````bash
-git push -u origin 1.2.0
+git push origin 1.2.0
 ````
 
 ### Pull Request: de release a develop
