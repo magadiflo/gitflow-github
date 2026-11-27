@@ -127,3 +127,88 @@ gitGraph
 > usadas para resolver conflictos.
 
 ---
+
+## 🌳 Ramas, origen y destino
+
+### 🏛️ Ramas principales
+
+Tienen vida indefinida. **Nunca se eliminan** y en esta práctica **nadie hace push directo** a ellas después de la
+preparación inicial.
+
+- **`main`**: refleja lo que está **en producción o listo para producción**. Cada integración a `main` representa una
+  versión nueva y recibe un tag.
+- **`develop`**: es la rama de integración. Contiene los últimos cambios terminados para la **próxima versión**.
+
+### 🧩 Ramas de soporte
+
+Tienen vida limitada y se eliminan al cumplir su propósito.
+
+- **`feature/*`**: desarrolla una funcionalidad.
+- **`release/*`**: prepara una versión. Se prueba y solo admite correcciones y ajustes de la versión. **No entran
+  funcionalidades nuevas.**
+- **`hotfix/*`**: corrige un error urgente de producción. Como nace de `main`, no arrastra los cambios de `develop` que
+  aún no se han publicado.
+
+### 🔀 Tabla de origen y destino
+
+| Rama                               | Sale de               | Se integra a             | ¿Se elimina?         |
+|------------------------------------|-----------------------|--------------------------|----------------------|
+| `main`                             | — (rama inicial)      | —                        | No                   |
+| `develop`                          | `main` (una sola vez) | —                        | No                   |
+| `feature/*`                        | `develop`             | `develop`                | Sí                   |
+| `release/*`                        | `develop`             | `main` **y** `develop`   | Sí, después de ambas |
+| `hotfix/*`                         | `main`                | `main` **y** `develop`   | Sí, después de ambas |
+| `hotfix/*` con una release abierta | `main`                | `main` **y** `release/*` | Sí, después de ambas |
+
+> 📌 `develop` **no se integra directamente a `main`**. Sus cambios llegan mediante una `release/*`.
+
+> 📌 Una **release abierta** es una rama `release/*` ya creada que todavía no ha terminado (por ejemplo, aún está
+> siendo probada). Si en ese momento se necesita un hotfix, este se integra en `main` y en la **release abierta**. La
+> corrección llega a `develop` cuando la release se integra en `develop`. Si `develop` la necesita antes, el hotfix
+> también se integra directamente en `develop`.
+
+Para entender mejor el caso de un `hotfix/*` **con una release abierta**, veamos el siguiente ejemplo:
+
+1. En producción (`main`) está la versión `1.0.1`.
+2. Creas `release/1.1.0` desde `develop` y empiezan las pruebas. **La release está abierta.**
+3. Mientras pruebas la release, aparece un error urgente en producción.
+4. Creas `hotfix/1.0.2` desde `main` y corriges el error.
+5. El hotfix se integra en:
+    - `main`, para corregir producción (y se crea el tag `v1.0.2`).
+    - `release/1.1.0`, para que la próxima versión también tenga la corrección.
+6. Cuando `release/1.1.0` supera las pruebas, se integra en `main` y en `develop`. Así, la corrección del hotfix llega
+   también a `develop`.
+
+Si no integras el hotfix en la **release abierta**, esta no tendrá la corrección: probarías la `1.1.0` sin el arreglo y
+la corrección no llegaría a `develop` a través de la release.
+
+**¿Y si `develop` necesita la corrección antes?**
+
+Por ejemplo, un developer está trabajando en una feature y ese error no le permite avanzar. En ese caso, no espera a que
+termine la release: el hotfix se integra en `main`, en la `release` abierta y además en `develop`. La rama del hotfix se
+elimina después de completar esas integraciones.
+
+### 🛠️ Ramas adicionales (convenciones de equipo)
+
+No son tipos del modelo original, pero ayudan cuando todo entra mediante **Pull Requests:**
+
+| Rama       | Sale de     | Se integra a         | Para qué                                                        |
+|------------|-------------|----------------------|-----------------------------------------------------------------|
+| `bugfix/*` | `release/*` | La misma `release/*` | Error encontrado al probar la release                           |
+| `bugfix/*` | `develop`   | `develop`            | Error aún no publicado, fuera de una release                    |
+| `chore/*`  | `develop`   | `develop`            | Cambiar la versión o resolver conflictos al traer otros cambios |
+| `chore/*`  | `release/*` | La misma `release/*` | Resolver conflictos al llevar un hotfix a la release            |
+
+> ℹ️ El [artículo original de Vincent Driessen](https://nvie.com/posts/a-successful-git-branching-model/), autor de
+> GitFlow, permite corregir errores **directamente** en la `release/*`. Aquí usamos `bugfix/*` para que cada corrección
+> pase por un Pull Request y tenga su revisión.
+
+> ℹ️ Una rama `chore/*` es temporal y sirve para tareas de apoyo, no para crear funcionalidades ni corregir errores.
+> Por ejemplo, para llevar `release/1.0.0` a `develop` cuando hay conflictos: se crea la `chore/*` desde `develop`, se
+> hace merge de `release/1.0.0` dentro de ella, se resuelven los conflictos y se abre un PR hacia `develop`. Se elimina
+> después de integrarse.
+>
+> En general, `chore` se usa para tareas de mantenimiento. En esta guía nos limitamos a esos dos usos para que sea fácil
+> de seguir.
+
+---
