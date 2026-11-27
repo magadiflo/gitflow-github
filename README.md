@@ -253,3 +253,41 @@ así que el historial muestra qué commits entraron juntos.
 > a dos destinos, un squash crearía commits distintos en cada uno y Git no reconocería que es el mismo trabajo.
 
 ---
+
+## 🔢 Versionado y tags
+
+Usamos [versionado semántico](https://semver.org/lang/es/): **`MAJOR.MINOR.PATCH`**.
+
+| Parte     | Sube cuando...                                                        | Ejemplo           |
+|-----------|-----------------------------------------------------------------------|-------------------|
+| **MAJOR** | Hay cambios **incompatibles**: los clientes de la API deben adaptarse | `1.4.2` → `2.0.0` |
+| **MINOR** | Se agrega funcionalidad **compatible**                                | `1.0.2` → `1.1.0` |
+| **PATCH** | Se **corrige** un error de forma compatible                           | `1.0.0` → `1.0.1` |
+
+- Cuando sube un número, **los de su derecha vuelven a cero**.
+- El número lo decide **el tipo de cambio publicado**, no el nombre de la rama. Una release que solo trae correcciones
+  sería PATCH; una con funcionalidades compatibles, MINOR.
+- Ejemplo de `2.0.0`: renombrar en el JSON el campo `price` a `unitPrice`. Los clientes que leen `price` dejarían de
+  funcionar. El flujo sería el de una release (`release/2.0.0`).
+
+### 📅 Línea de versiones de esta práctica
+
+| Orden | Rama            | Tag      | Motivo                                       |
+|-------|-----------------|----------|----------------------------------------------|
+| 1     | `release/1.0.0` | `v1.0.0` | Primera versión estable                      |
+| 2     | `hotfix/1.0.1`  | `v1.0.1` | Corrección en producción                     |
+| 3     | `hotfix/1.0.2`  | `v1.0.2` | Otra corrección, con `release/1.1.0` abierta |
+| 4     | `release/1.1.0` | `v1.1.0` | Funcionalidad nueva compatible               |
+
+### ☕ Versión en Maven
+
+| Valor en `pom.xml` | Significado                               |
+|--------------------|-------------------------------------------|
+| `1.1.0-SNAPSHOT`   | Versión **en desarrollo** (puede cambiar) |
+| `1.1.0`            | Versión **final** de una release          |
+
+El **tag** lleva el prefijo `v` (`v1.1.0`); la versión de Maven no (`1.1.0`). Usamos **tags anotados** (`git tag -a`),
+que guardan autor, fecha y mensaje.
+
+---
+
