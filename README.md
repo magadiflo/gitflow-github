@@ -291,3 +291,60 @@ que guardan autor, fecha y mensaje.
 
 ---
 
+## 👥 Equipo, reglas y recorrido
+
+| Usuario           | Correo                         | Rol                                              | Directorio de trabajo         |
+|-------------------|--------------------------------|--------------------------------------------------|-------------------------------|
+| `magadiflo`       | magadiflo@gmail.com            | Líder técnico y developer. Dueño del repositorio | `M:\practice\magadiflo`       |
+| `dev-partner-lab` | martin.g.diaz.flores@gmail.com | Developer                                        | `M:\practice\dev-partner-lab` |
+
+### ✅ Reglas de revisión
+
+- Todo cambio en `main` y `develop` entra mediante un **Pull Request** (PR).
+- **El autor de un PR no puede aprobarlo** en GitHub. Aprueba el otro usuario.
+    - PR de `dev-partner-lab` → revisa `magadiflo`.
+    - PR de `magadiflo` → revisa `dev-partner-lab`.
+- Después de la aprobación, **en esta práctica `magadiflo` hace el merge**. Aprobar y hacer merge son acciones
+  distintas.
+- No usamos permisos de administrador para saltarnos las reglas.
+
+### 🏷️ Cómo leer esta guía
+
+Antes de cada grupo de pasos verás quién los ejecuta:
+
+- 👑 **`[magadiflo]`**: trabaja en `M:\practice\magadiflo\gitflow-github-practice`.
+- 🧑‍💻 **`[dev-partner-lab]`**: trabaja en `M:\practice\dev-partner-lab\gitflow-github-practice`.
+
+> 💡 El usuario `magadiflo` **usará la línea de comando Cmder**, mientras que el usuario `dev-partner-lab` usará el
+> **Git Bash**. Para GitHub en la web, **un navegador o perfil distinto por cuenta** (o una ventana privada).
+> Así no confundes quién hace cada acción.
+
+> 📦 Cada comando se explica **la primera vez** que aparece. Si luego aparece con una opción nueva, se explica solo esa
+> opción. Consulta el [índice de comandos](#comandos).
+
+### 🛣️ Recorrido de la práctica
+
+| PR  | Escenario | Rama origen → destino                                           | Autor           | Aprueba         |
+|-----|-----------|-----------------------------------------------------------------|-----------------|-----------------|
+| #1  | 1         | `feature/list-products` → `develop`                             | dev-partner-lab | magadiflo       |
+| #2  | 2         | `feature/create-product` → `develop`                            | dev-partner-lab | magadiflo       |
+| #3  | 3         | `feature/search-products-by-name` → `develop`                   | magadiflo       | dev-partner-lab |
+| #4  | 3         | `feature/filter-products-by-max-price` → `develop`              | dev-partner-lab | magadiflo       |
+| #5  | 4         | `chore/bump-version-1.1.0-snapshot` → `develop`                 | magadiflo       | dev-partner-lab |
+| #6  | 4         | `bugfix/case-insensitive-name-search` → `release/1.0.0`         | dev-partner-lab | magadiflo       |
+| #7  | 4         | `release/1.0.0` → `main`                                        | magadiflo       | dev-partner-lab |
+| #8  | 4         | `chore/back-merge-release-1.0.0` → `develop`                    | magadiflo       | dev-partner-lab |
+| #9  | 5         | `hotfix/1.0.1` → `main`                                         | magadiflo       | dev-partner-lab |
+| #10 | 5         | `chore/back-merge-hotfix-1.0.1` → `develop`                     | magadiflo       | dev-partner-lab |
+| #11 | 6         | `feature/get-product-by-id` → `develop`                         | dev-partner-lab | magadiflo       |
+| #12 | 6         | `chore/bump-version-1.2.0-snapshot` → `develop`                 | magadiflo       | dev-partner-lab |
+| #13 | 6         | `hotfix/1.0.2` → `main`                                         | dev-partner-lab | magadiflo       |
+| #14 | 6         | `chore/merge-hotfix-1.0.2-into-release-1.1.0` → `release/1.1.0` | dev-partner-lab | magadiflo       |
+| #15 | 7         | `release/1.1.0` → `main`                                        | magadiflo       | dev-partner-lab |
+| #16 | 7         | `chore/back-merge-release-1.1.0` → `develop`                    | magadiflo       | dev-partner-lab |
+
+> ℹ️ Los números de PR de la tabla (`#1`, `#2`, ...) son referenciales. GitHub los asigna automáticamente con un mismo
+> contador para Issues y Pull Requests. Si antes creas un Issue o un PR adicional (aunque luego lo cierres), tus números
+> serán distintos. En ese caso, guíate por las ramas de origen y destino.
+
+---
