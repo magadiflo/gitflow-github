@@ -212,3 +212,44 @@ No son tipos del modelo original, pero ayudan cuando todo entra mediante **Pull 
 > de seguir.
 
 ---
+
+## 📏 Convenciones del equipo
+
+### 🏷️ Nombres de ramas
+
+En inglés, en minúsculas y con guiones.
+
+| Tipo          | Formato                       | Ejemplo                               |
+|---------------|-------------------------------|---------------------------------------|
+| Feature       | `feature/<descripcion>`       | `feature/create-product`              |
+| Release       | `release/<MAJOR.MINOR.PATCH>` | `release/1.0.0`                       |
+| Hotfix        | `hotfix/<MAJOR.MINOR.PATCH>`  | `hotfix/1.0.1`                        |
+| Bugfix        | `bugfix/<descripcion>`        | `bugfix/case-insensitive-name-search` |
+| Mantenimiento | `chore/<descripcion>`         | `chore/back-merge-release-1.0.0`      |
+
+> 💼 En muchas empresas se agrega el código del ticket: `feature/PROJ-123-create-product`.
+
+### ✍️ Mensajes de commit
+
+Usamos [Conventional Commits](https://www.conventionalcommits.org/), con el formato
+`tipo(alcance opcional): descripción`.
+
+| Tipo       | Uso                                          | Ejemplo                                |
+|------------|----------------------------------------------|----------------------------------------|
+| `feat`     | Funcionalidad nueva                          | `feat: add endpoint to list products`  |
+| `fix`      | Corrección de un error                       | `fix: validate product name and price` |
+| `chore`    | Mantenimiento                                | `chore(release): set version 1.0.0`    |
+| `test`     | Solo pruebas                                 | `test: add product service tests`      |
+| `docs`     | Solo documentación                           | `docs: update README`                  |
+| `refactor` | Mejora interna sin cambiar el comportamiento | `refactor: simplify product filters`   |
+
+### 🔁 Estrategia de integración
+
+En todos los PR usamos `Create a merge commit`. Equivale a un merge con `--no-ff`: siempre crea un commit de merge,
+así que el historial muestra qué commits entraron juntos.
+
+> 💼 **En otras empresas:** muchas usan **Squash and merge** (un commit por feature) o **Rebase and merge** (historial
+> lineal). Depende del equipo. En GitFlow conviene el commit de merge, sobre todo en `release/*` y `hotfix/*`: como van
+> a dos destinos, un squash crearía commits distintos en cada uno y Git no reconocería que es el mismo trabajo.
+
+---
