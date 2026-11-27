@@ -582,3 +582,82 @@ En resumen:
 | `user.name` y `user.email`               | ¿Quién figura como **autor del commit**?    |
 | `credential.https://github.com.username` | ¿Con qué **cuenta de GitHub** me autentico? |
 
+### 6️⃣ Crear el proyecto Spring Boot
+
+👑 **`[magadiflo]`**
+(en [start.spring.io](https://start.spring.io/#!type=maven-project&language=java&platformVersion=4.2.0&packaging=jar&configurationFileFormat=yaml&jvmVersion=25&groupId=dev.magadiflo&artifactId=gitflow-github-practice&packageName=dev.magadiflo.gitflow.app&dependencies=web,lombok))
+
+| Campo        | Valor                                      |
+|--------------|--------------------------------------------|
+| Project      | Maven                                      |
+| Language     | Java                                       |
+| Spring Boot  | 4.2.0 (o el último parche estable `4.2.x`) |
+| Group        | `dev.magadiflo`                            |
+| Artifact     | `gitflow-github-practice`                  |
+| Name         | `gitflow-github-practice`                  |
+| Package name | `dev.magadiflo.gitflow.app`                |
+| Packaging    | Jar                                        |
+| Java         | 25                                         |
+| Dependencies | **Spring Web**, **Lombok**                 |
+
+1. Presiona **Generate** y descarga el ZIP.
+2. Extrae **el contenido** de la carpeta del ZIP dentro de `M:\practice\magadiflo\gitflow-github-practice`. El `pom.xml`
+   debe quedar en la raíz del repositorio, junto a la carpeta oculta `.git`. Incluye también `.gitignore`,
+   `.gitattributes` y `.mvn`.
+3. En `pom.xml`, cambia **la versión del proyecto** (la que está debajo de
+   `<artifactId>gitflow-github-practice</artifactId>`, **no** la de `<parent>`):
+    ```xml
+    <version>1.0.0-SNAPSHOT</version>
+    ```
+
+> ℹ️ Deja que Initializr genere el `pom.xml`. Incluye el starter web (`spring-boot-starter-webmvc` en Spring Boot 4),
+> su starter de pruebas (`spring-boot-starter-webmvc-test`, que trae JUnit y AssertJ), Lombok y la configuración para
+> que Lombok procese sus anotaciones. No reemplaces ese archivo.
+
+Comprueba que el proyecto funciona antes del primer commit:
+
+```bash
+M:\practice\magadiflo\gitflow-github-practice (main -> origin)
+$ mvnw clean test
+...
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.301 s -- in dev.magadiflo.gitflow.app.GitflowGithubPracticeApplicationTests
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  9.501 s
+[INFO] Finished at: 2026-11-27T17:59:19-05:00
+[INFO] ------------------------------------------------------------------------
+```
+
+**¿Qué hace?** Compila el proyecto desde cero y ejecuta las pruebas.
+
+- `mvnw`: ejecuta **Maven Wrapper** (en Windows, el archivo `mvnw.cmd`). Usa la versión de Maven definida por el
+  proyecto y la descarga si todavía no está disponible.
+- `clean`: borra la carpeta `target`, donde quedan los archivos de compilaciones anteriores.
+- `test`: compila el proyecto y ejecuta sus pruebas.
+
+Al generar el proyecto con Spring Initializr, también se genera esta prueba por defecto:
+
+````java
+@SpringBootTest
+class GitflowGithubPracticeApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
+````
+
+- `@SpringBootTest`: carga el contexto de la aplicación Spring Boot para la prueba.
+- `contextLoads()`: aunque está vacío, la prueba **falla si el contexto de Spring no puede cargarse**, por ejemplo por
+  un error de configuración. Si pasa, sabemos que el contexto se cargó correctamente.
+
+> ℹ️ Con la configuración por defecto de `@SpringBootTest`, esta prueba no levanta un servidor web real. La aplicación
+> la ejecutaremos más adelante con `mvnw spring-boot:run`.
+
