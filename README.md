@@ -348,3 +348,237 @@ Antes de cada grupo de pasos verás quién los ejecuta:
 > serán distintos. En ese caso, guíate por las ramas de origen y destino.
 
 ---
+
+## 🧰 Preparación del entorno
+
+**Necesitas:** Git para Windows (incluye Git Credential Manager), JDK 25, un editor o IDE y las dos cuentas de GitHub.
+No necesitas instalar Maven: el proyecto trae **Maven Wrapper**.
+
+### 1️⃣ Verificar herramientas
+
+👑 **`[magadiflo]`**
+
+```bash
+$ git --version
+$ java -version
+$ git credential-manager --version
+```
+
+**¿Qué hacen?** Confirman que las herramientas están instaladas.
+
+- `git --version`: muestra la versión de Git.
+- `java -version`: muestra la versión de Java que se ejecuta. Debe ser la 25.
+- `git credential-manager --version`: muestra la versión de **Git Credential Manager (GCM)**, el programa que guarda y
+  entrega tus credenciales de GitHub cuando usas HTTPS.
+
+`git switch` requiere Git 2.23 o superior.
+
+### 2️⃣ Revisar la configuración global y los alias
+
+👑 **`[magadiflo]`**
+
+```bash
+C:\cmder
+$ git config --global --list
+core.editor="C:\Users\magadiflo\AppData\Local\Programs\Microsoft VS Code\bin\code" --wait
+filter.lfs.clean=git-lfs clean -- %f
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+user.name=Martín Díaz
+user.email=magadiflo@gmail.com
+alias.lg=log --oneline --decorate --all --graph
+alias.s=status -s -b
+credential.https://github.com.username=magadiflo
+```
+
+**¿Qué hace?** Muestra la configuración que aplica a **todos los repositorios** de tu usuario de Windows.
+
+- `git config`: lee o escribe la configuración de Git.
+- `--global`: trabaja con la configuración global (archivo `.gitconfig` de tu usuario).
+- `--list`: lista las claves y sus valores.
+
+`magadiflo` **usará esta identidad global**; no hay que cambiar nada.
+
+#### 🔤 Alias de la práctica
+
+**En nuestra PC ya existen.** Estos comandos quedan como referencia para otra computadora:
+
+```bat
+git config --global alias.lg "log --oneline --decorate --all --graph"
+git config --global alias.s "status -s -b"
+```
+
+**¿Qué hacen?** Crean atajos: `git lg` y `git s`. Un **alias** es un nombre corto para un comando; no viene con Git por
+defecto.
+
+- `alias.lg "..."`: al escribir `git lg`, Git ejecuta `git log` con estas opciones:
+    - `log`: muestra el historial de commits.
+    - `--oneline`: un commit por línea, con el hash abreviado y el mensaje.
+    - `--decorate`: muestra qué ramas y tags apuntan a cada commit.
+    - `--all`: incluye el historial de todas las referencias (ramas locales, remotas y tags), no solo la rama actual.
+    - `--graph`: dibuja las bifurcaciones y merges con líneas.
+- `alias.s "..."`: al escribir `git s`, Git ejecuta `git status` con estas opciones:
+    - `status`: muestra el estado de los archivos.
+    - `-s`: formato corto (*short*). Por ejemplo, `??` es un archivo sin seguimiento, `M` modificado, `A` agregado y
+      `UU` en conflicto.
+    - `-b`: incluye la rama actual y su relación con la rama remota.
+
+> 💡 Los alias son globales y ambos directorios usan la misma cuenta de Windows, así que sirven para los dos usuarios. Si
+> `git lg` abre un visor paginado, sal con la tecla `q`.
+
+### 3️⃣ Crear el repositorio en GitHub
+
+👑 **`[magadiflo]`** (en el navegador)
+
+1. **New repository**.
+2. **Repository name:** `gitflow-github-practice`.
+3. **Visibility:** **Public**. Con GitHub Free, los rulesets están disponibles en repositorios públicos.
+4. **No agregues** README, `.gitignore` ni licencia. El repositorio debe quedar **vacío**.
+5. **Create repository**.
+
+> ⚠️ Como es público, nunca subas contraseñas, tokens ni datos privados. Los correos de los commits también quedan
+> visibles. Si quieres ocultar el tuyo, GitHub ofrece una dirección `noreply` en **Settings → Emails**.
+
+![02.png](assets/current/theory/02.png)
+
+![03.png](assets/current/theory/03.png)
+
+### 4️⃣ Invitar al colaborador
+
+👑 **`[magadiflo]`** (en el navegador)
+
+1. En el repositorio: **Settings → Collaborators → Add people**.
+2. Busca `dev-partner-lab` y envía la invitación.
+
+![04.png](assets/current/theory/04.png)
+
+🧑‍💻 **`[dev-partner-lab]`** (en su navegador)
+
+1. Abre la invitación (desde el correo o las notificaciones de GitHub).
+2. **Accept invitation**.
+
+![05.png](assets/current/theory/05.png)
+
+Con esto obtiene permiso de escritura: puede subir ramas y sus aprobaciones cuentan para las reglas.
+
+![06.png](assets/current/theory/06.png)
+
+### 5️⃣ Clonar el repositorio (magadiflo)
+
+👑 **`[magadiflo]`**
+
+````bash
+C:\cmder
+$ mkdir M:\practice\magadiflo\
+
+C:\cmder
+$ cd /d M:\practice\magadiflo\
+
+M:\practice\magadiflo
+$ git clone https://github.com/magadiflo/gitflow-github-practice.git
+Cloning into 'gitflow-github-practice'...
+warning: You appear to have cloned an empty repository.
+
+M:\practice\magadiflo
+$ cd gitflow-github-practice\
+
+M:\practice\magadiflo\gitflow-github-practice (main -> origin)
+$ 
+````
+
+**¿Qué hacen?** Crean el área de trabajo de `magadiflo`, descargan el repositorio y entran en él.
+
+- `mkdir M:\practice\magadiflo`: crea la carpeta (en Cmder/CMD también crea las carpetas intermedias que falten). La
+  unidad `M:` debe existir.
+- `cd /d M:\practice\magadiflo`: cambia de carpeta. `/d` permite cambiar también de **unidad** (por ejemplo, de `C:` a
+  `M:`).
+- `git clone <url>`: copia el repositorio remoto a tu PC, con su historial, y registra el remoto con el nombre
+  **`origin`**.
+    - `https://`: protocolo usado para comunicarse con GitHub.
+    - `github.com/magadiflo/gitflow-github-practice.git`: servidor, **dueño** del repositorio y nombre del repositorio.
+- `cd gitflow-github-practice`: entra en la carpeta recién creada.
+
+La advertencia es esperada: el repositorio está vacío.
+
+#### 🪪 Comprobar la identidad
+
+Primero revisamos la configuración **local** del repositorio, para verificar que no tenga una identidad propia:
+
+````bash
+M:\practice\magadiflo\gitflow-github-practice (main -> origin)
+$ git config --local --list
+core.repositoryformatversion=0
+core.filemode=false
+core.bare=false
+core.logallrefupdates=true
+core.symlinks=false
+core.ignorecase=true
+remote.origin.url=https://github.com/magadiflo/gitflow-github-practice.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+branch.main.remote=origin
+branch.main.merge=refs/heads/main
+````
+
+- `--local`: trabaja únicamente con la configuración de **este repositorio**, guardada en `.git/config`.
+- `--list`: lista las claves y sus valores.
+
+En el resultado no aparecen `user.name`, `user.email` ni `credential.https://github.com.username`.
+
+Ahora revisamos la configuración **global**:
+
+````bash
+M:\practice\magadiflo\gitflow-github-practice (main -> origin)
+$ git config --global --list
+core.editor="C:\Users\magadiflo\AppData\Local\Programs\Microsoft VS Code\bin\code" --wait
+filter.lfs.clean=git-lfs clean -- %f
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+user.name=Martín Díaz
+user.email=magadiflo@gmail.com
+alias.lg=log --oneline --decorate --all --graph
+alias.s=status -s -b
+credential.https://github.com.username=magadiflo
+````
+
+Como el repositorio no define una identidad local, Git usará la global para la **autoría de los commits**:
+
+- `user.name`: nombre que figurará como autor.
+- `user.email`: correo del autor. GitHub lo usa para asociar el commit con una cuenta.
+
+Además, en la configuración global tenemos esta entrada:
+
+````bash
+credential.https://github.com.username=magadiflo 
+````
+
+La establecimos anteriormente, en otro proyecto, con el siguiente comando. Por eso ya aparece aquí y **no es necesario
+volver a ejecutarlo**:
+
+````bash
+C:\cmder
+$ git config --global credential.https://github.com.username "magadiflo"
+````
+
+- `credential.https://github.com.username`: indica el nombre de usuario para las credenciales de `https://github.com`.
+- `"magadiflo"`: nombre de la cuenta de GitHub que se usará **por defecto** para autenticarse. Si un repositorio no
+  indica otra cuenta, ya sea en su configuración local o en la URL remota, **Git Credential Manager (GCM)** usará la
+  credencial de `magadiflo`, por ejemplo al hacer `git push`. Si todavía no la tiene guardada, pedirá iniciar sesión.
+
+Al ser una configuración global, se aplica a los repositorios que usen `https://github.com` con nuestro usuario de
+Windows. Tienen prioridad sobre ella una configuración local del repositorio o un usuario escrito en la URL remota.
+
+> ℹ️ Esta entrada **no guarda una contraseña ni un token**, y tampoco define el autor de los commits. Solo indica qué
+> cuenta usar al autenticarse.
+
+Más adelante, como trabajaremos con otro usuario, en el repositorio de `dev-partner-lab` configuraremos **a nivel
+local** tanto su identidad como su cuenta de GitHub.
+
+En resumen:
+
+| Configuración                            | Responde a                                  |
+|------------------------------------------|---------------------------------------------|
+| `user.name` y `user.email`               | ¿Quién figura como **autor del commit**?    |
+| `credential.https://github.com.username` | ¿Con qué **cuenta de GitHub** me autentico? |
+
