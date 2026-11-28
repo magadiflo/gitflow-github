@@ -786,3 +786,21 @@ flowchart LR
 ```
 
 *(Todavía no hay un commit nuevo: ambas ramas apuntan al mismo.)*
+
+### 8️⃣ Configurar GitHub
+
+👑 **`[magadiflo]`** (en el navegador)
+
+#### a) Métodos de merge
+
+En **Settings → General → Pull Requests**:
+
+- ✅ **Allow merge commits**
+- ⬜ **Allow squash merging**
+- ⬜ **Allow rebase merging**
+- ⬜ **Automatically delete head branches** (déjalo desactivado)
+
+![07.png](assets/current/theory/07.png)
+
+> ⚠️ Las ramas `release/*` y `hotfix/*` necesitan **dos integraciones**. Con la eliminación automática activada, GitHub
+> puede borrarlas después de la primera. Las eliminaremos manualmente.
