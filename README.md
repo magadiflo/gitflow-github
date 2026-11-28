@@ -742,3 +742,47 @@ branch 'main' set up to track 'origin/main'.
 
 > 🔐 En el primer `push`, GCM puede abrir el navegador. **Inicia sesión como `magadiflo`**. Si ya tiene guardada esa
 > credencial, no preguntará.
+
+Ahora creamos `develop` desde `main`:
+
+````bash
+M:\practice\magadiflo\gitflow-github-practice (main -> origin)
+$ git lg
+* 7733657 (HEAD -> main, origin/main) chore: initialize Spring Boot project
+
+M:\practice\magadiflo\gitflow-github-practice (main -> origin)
+$ git switch -c develop
+Switched to a new branch 'develop'
+
+M:\practice\magadiflo\gitflow-github-practice (develop)
+$ git push -u origin develop
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+remote:
+remote: Create a pull request for 'develop' on GitHub by visiting:
+remote:      https://github.com/magadiflo/gitflow-github-practice/pull/new/develop
+remote:
+To https://github.com/magadiflo/gitflow-github-practice.git
+ * [new branch]      develop -> develop
+branch 'develop' set up to track 'origin/develop'.
+
+M:\practice\magadiflo\gitflow-github-practice (develop -> origin)
+$ git lg
+* 7733657 (HEAD -> develop, origin/main, origin/develop, main) chore: initialize Spring Boot project 
+````
+
+**¿Qué hacen?** Crean `develop`, la suben y muestran el historial.
+
+- `git switch -c develop`: crea una rama **desde donde estás** y te cambia a ella.
+    - `switch`: cambia de rama.
+    - `-c` (`--create`): crea la rama antes de cambiar. Es la alternativa moderna a `git checkout -b`.
+- `git lg`: tu alias para ver el historial gráfico.
+
+`HEAD ->` indica la rama en la que estás. `main` y `develop` son ramas **locales**; las que empiezan con `origin/` son
+tu referencia local del estado del **remoto**.
+
+```mermaid
+flowchart LR
+    A["main"] -->|" git switch -c develop "| B["develop"]
+```
+
+*(Todavía no hay un commit nuevo: ambas ramas apuntan al mismo.)*
