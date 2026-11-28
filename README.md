@@ -661,3 +661,84 @@ class GitflowGithubPracticeApplicationTests {
 > ℹ️ Con la configuración por defecto de `@SpringBootTest`, esta prueba no levanta un servidor web real. La aplicación
 > la ejecutaremos más adelante con `mvnw spring-boot:run`.
 
+### 7️⃣ Primer commit y creación de `develop`
+
+👑 **`[magadiflo]`**
+
+````bash
+M:\practice\magadiflo\gitflow-github-practice (main -> origin)
+$ git s
+## No commits yet on main...origin/main [gone]
+?? .gitattributes
+?? .gitignore
+?? .mvn/
+?? mvnw
+?? mvnw.cmd
+?? pom.xml
+?? src/
+
+M:\practice\magadiflo\gitflow-github-practice (main -> origin)
+$ git add .
+warning: in the working copy of '.gitattributes', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.mvn/wrapper/maven-wrapper.properties', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'mvnw.cmd', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'pom.xml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/java/dev/magadiflo/gitflow/app/GitflowGithubPracticeApplication.java', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/main/resources/application.yml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/test/java/dev/magadiflo/gitflow/app/GitflowGithubPracticeApplicationTests.java', LF will be replaced by CRLF the next time Git touches it
+
+M:\practice\magadiflo\gitflow-github-practice (main -> origin)
+$ git commit -m "chore: initialize Spring Boot project"
+[main (root-commit) 7733657] chore: initialize Spring Boot project
+ 9 files changed, 631 insertions(+)
+ create mode 100644 .gitattributes
+ create mode 100644 .gitignore
+ create mode 100644 .mvn/wrapper/maven-wrapper.properties
+ create mode 100644 mvnw
+ create mode 100644 mvnw.cmd
+ create mode 100644 pom.xml
+ create mode 100644 src/main/java/dev/magadiflo/gitflow/app/GitflowGithubPracticeApplication.java create mode 100644 src/main/resources/application.yml
+ create mode 100644 src/test/java/dev/magadiflo/gitflow/app/GitflowGithubPracticeApplicationTests.java
+
+M:\practice\magadiflo\gitflow-github-practice (main -> origin)
+$ git push -u origin main
+Enumerating objects: 27, done.
+Counting objects: 100% (27/27), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (15/15), done.
+Writing objects: 100% (27/27), 9.51 KiB | 1.58 MiB/s, done.
+Total 27 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/magadiflo/gitflow-github-practice.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'. 
+````
+
+> ℹ️ Estamos en la rama `main`, como muestra la consola. Si tu rama inicial tuviera otro nombre, por ejemplo `master`,
+> antes de hacer el push renómbrala con `git branch -M main`. Aquí `branch -M` cambia el nombre de la rama actual;
+> la opción `-M` fuerza el cambio, incluso si ya existiera una rama local con el nombre de destino, así que úsala con
+> cuidado.
+
+**¿Qué hacen?** Revisan los archivos, guardan el proyecto en un commit y lo suben a GitHub.
+
+- `git s`: nuestro alias de estado. Úsalo **antes de agregar** para saber qué cambios hay en el proyecto y dónde se
+  encuentran: en el **working directory** (aún sin preparar) o en el **staging area** (listos para el commit). También
+  muestra los archivos nuevos que Git todavía no rastrea. Aprovecha para revisar que no vayas a agregar archivos que no
+  quieres subir.
+- `git add .`: agrega al **área de preparación** (*staging*) los cambios de la carpeta actual y sus subcarpetas. `.`
+  significa "la carpeta actual". Respeta las reglas de `.gitignore` para los archivos que aún no están rastreados.
+- `git commit -m "..."`: crea un commit con lo preparado.
+    - `-m`: define el mensaje en el mismo comando.
+    - `chore:`: es el **tipo** de commit, según la convención que seguimos. **Indica una tarea de mantenimiento o
+      configuración.** En este caso, subir la base del proyecto, que todavía no incluye funcionalidades de nuestra API
+      ni corrige errores.
+    - `initialize Spring Boot project`: es la **descripción** del commit, un resumen breve del cambio (*"inicializa el
+      proyecto Spring Boot"*). Por convención, el verbo se escribe en **modo imperativo**: `initialize`, no
+      `initialized` ni `initializes`.
+- `git push -u origin main`: envía los commits al repositorio remoto.
+    - `origin`: nombre del remoto.
+    - `main`: rama que se sube.
+    - `-u` (`--set-upstream`): vincula la rama local con `origin/main`. Después podrás usar `git push` sin más datos.
+
+> 🔐 En el primer `push`, GCM puede abrir el navegador. **Inicia sesión como `magadiflo`**. Si ya tiene guardada esa
+> credencial, no preguntará.
